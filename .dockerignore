@@ -1,0 +1,14 @@
+.dockerignore
+Makefile
+docker*.yml
+vendor
+var/*
+*.log
+.gitignore
+.gitlab-ci.yml
+.editorconfig
+.env
+.gitlab
+.idea
+.git
+*.local.yml

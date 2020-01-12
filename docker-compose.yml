@@ -1,0 +1,71 @@
+version: '3.2'
+
+networks:
+  app-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.220.0/28
+
+volumes:
+  redis-data:
+  pg-data:
+  home-dir:
+
+services:
+  app: &app-service
+    image: app:latest
+    restart: on-failure
+    volumes:
+      - .:/app:cached
+    env_file:
+      - ./docker/docker-compose.env
+    environment:
+      - PHP_IDE_CONFIG="cli.dev.example.com"
+      - XDEBUG_CONFIG="remote_host=192.168.220.1"
+    ports:
+      - '4001:80'
+      - '4002:443'
+    command: 'rr serve -v -d -c /app/.rr.local.yml'
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - app-network
+
+  redis:
+    image: redis:${REDIS_VERSION:-5.0.5}-alpine
+    volumes:
+      - redis-data:/data:cached
+    ports:
+      - 6379
+      - '4004:6379'
+    networks:
+      - app-network
+
+  redis-commander: # <https://github.com/joeferner/redis-commander>
+    image: rediscommander/redis-commander:latest
+    environment:
+      REDIS_HOSTS: 'default:redis:6379:0,cache:redis:6379:1,sessions:redis:6379:2'
+    ports:
+      - '4003:8081'
+    depends_on:
+      - redis
+    networks:
+      - app-network
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-11.4}-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: 'forge'
+      POSTGRES_USER: 'forge'
+      POSTGRES_PASSWORD: 'forge'
+    volumes:
+      - pg-data:/var/lib/postgresql/data:rw
+    ports:
+      - 5432
+      - '4005:5432'
+    networks:
+      - app-network

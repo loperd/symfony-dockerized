@@ -1,0 +1,56 @@
+FROM 512k/roadrunner:1.5.2 AS roadrunner
+FROM app/php:latest
+
+ENV \
+    PS1='\[\033[1;32m\]\[\033[1;36m\][\u@\h] \[\033[1;34m\]\w\[\033[0;35m\] \[\033[1;36m\]# \[\033[0m\]' \
+    COMPOSER_HOME="/tmp/composer" \
+    OWN_SSL_CERT_DIR="/ssl-cert" \
+    OWN_SSL_CERT_LIFETIME=1095 \
+    XDEBUG_VERSION="2.9.0"
+
+# persistent / runtime deps
+ENV PHPIZE_DEPS \
+    libc-dev \
+    pcre-dev \
+    autoconf \
+    openssl \
+    make \
+    g++ \
+    gcc
+
+COPY --from=roadrunner /usr/bin/rr /usr/bin/rr
+
+RUN set -xe \
+    && apk add --no-cache --virtual .build-deps ${PHPIZE_DEPS} \
+    && pecl install xdebug-${XDEBUG_VERSION} \
+        && echo -e "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)\nxdebug.remote_enable=on\nxdebug.remote_autostart=off" > /usr/local/etc/php/conf.d/xdebug.ini \
+    && docker-php-ext-enable xdebug \
+    && mkdir -p ${OWN_SSL_CERT_DIR} \
+        && cd ${OWN_SSL_CERT_DIR} \
+        && openssl genrsa -passout pass:x -out self-signed.key 2048 \
+        && cp self-signed.key self-signed.key.orig \
+        && openssl rsa -passin pass:x -in self-signed.key.orig -out self-signed.key \
+        && openssl req -new -key self-signed.key -out cert.csr \
+            -subj "/C=RU/ST=RU/L=Somewhere/O=SomeOrg/OU=IT Department/CN=example.com" \
+        && openssl x509 -req -days ${OWN_SSL_CERT_LIFETIME} -in cert.csr -signkey self-signed.key -out self-signed.crt \
+        && ls -lh
+
+COPY ./composer.* /app/
+
+RUN set -xe \
+    && composer install -vvv \
+        --no-interaction \
+        --no-autoloader \
+        --prefer-dist  \
+        --no-suggest \
+        --no-ansi \
+        --no-scripts \
+    && composer dump-autoload \
+    && rr -h
+
+EXPOSE 80
+EXPOSE 443
+
+VOLUME ["/app"]
+
+CMD ["rr", "serve", "-c", "/app/.rr.yml"]
