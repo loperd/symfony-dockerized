@@ -17,13 +17,14 @@ When creating this project, I was inspired by this article <https://habr.com/en/
 * [RoadRunner](https://github.com/spiral/roadrunner) [v1.5.2]
 * Makefile [RUS](https://blog.hook.sh/nix/makefile-full-doc/) manual, [EN](https://www.gnu.org/software/make/manual/make.html) official docs
 
-***
-
 # Installation
 
 Clone the repository
-<br/><br/>
-`git clone https://github.com/renay/symfony-docerized`
+<br/>
+
+```bash
+git clone https://github.com/renay/symfony-docerized
+```
 
 # Usage
 
@@ -31,38 +32,27 @@ Need to build base image:
 ```bash
 bash ./docker/php/build.sh -t app/php:0.1.0 # 0.1.0 as default version
 ```
-
 <br/>
 
 After you need to build an application image:
 ```bash
 bash ./docker/app/build.sh -t app/app:0.1.0 -m [--mode] 'dev' # 0.1.0 as default version
 ```
-
 <br/>
 
 And you need to lift all the containers:
 ```bash
 docker-compose up -d
 ```
-
 That's all. Now you can get to work :blush:
 
-<br/>
-
 # Options
-
 Name            | Accepted Values         | Example                   | Description
 ----------------|-------------------------|---------------------------|----------------------
 -m or --mode     | __dev__ or __prod__     | dev                       | This argument indicates which Dockerfile to use for the build environment _(Dockerfile.dev or Dockerfile.prod)_.
 -t              | name:tag                | app/{container}:{version} | Name and optionally a tag in the ‘name:tag’ format.
 
-<br/>
-
 May accept other options from https://docs.docker.com/engine/reference/commandline/build/
-
-<br/>
-<br/>
 
 # Contributing
 Soon...
