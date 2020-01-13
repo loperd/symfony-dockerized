@@ -9,6 +9,8 @@ COPY --from=roadrunner /usr/bin/rr /usr/bin/rr
 
 COPY ./composer.* /app/
 
+WORKDIR /app
+
 RUN set -xe \
     && composer install -vvv \
         --no-interaction \

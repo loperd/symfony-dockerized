@@ -37,6 +37,8 @@ RUN set -xe \
 
 COPY ./composer.* /app/
 
+WORKDIR /app
+
 RUN set -xe \
     && composer install -vvv \
         --no-interaction \
