@@ -23,26 +23,26 @@ Clone the repository
 <br/>
 
 ```bash
-git clone https://github.com/renay/symfony-docerized
+$ git clone https://github.com/renay/symfony-docerized
 ```
 
 # Usage
 
 Need to build base image:
 ```bash
-bash ./docker/php/build.sh -t app/php:0.1.0 # 0.1.0 as default version
+$ bash ./docker/php/build.sh -t app/php:0.1.0 # 0.1.0 as default version
 ```
 <br/>
 
 After you need to build an application image:
 ```bash
-bash ./docker/app/build.sh -t app/app:0.1.0 -m [--mode] 'dev' # 0.1.0 as default version
+$ bash ./docker/app/build.sh -t app/app:0.1.0 -m [--mode] 'dev' # 0.1.0 as default version
 ```
 <br/>
 
 And you need to lift all the containers:
 ```bash
-docker-compose up -d
+$ docker-compose up -d
 ```
 That's all. Now you can get to work :blush:
 
