@@ -35,6 +35,9 @@
             ".php_cs.dist"
         ]
     },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.0.4"
+    },
     "myclabs/deep-copy": {
         "version": "1.9.4"
     },
@@ -247,6 +250,9 @@
     },
     "symfony/polyfill-php73": {
         "version": "v1.13.1"
+    },
+    "symfony/polyfill-php80": {
+        "version": "v1.17.1"
     },
     "symfony/process": {
         "version": "v5.0.2"

@@ -13,7 +13,7 @@ When creating this project, I was inspired by this article <https://habr.com/en/
 * [PostgreSQL](https://www.postgresql.org/) [v11.4]
 * [Redis](https://redis.io/) & [Redis Commander](https://github.com/joeferner/redis-commander) [v5.0.5]
 * [PHP 7.4](https://www.php.net/ChangeLog-7.php#7.4.1) with [xDebug](https://xdebug.org/) [v2.9.0] in DEV build
-* [Symfony](https://symfony.com/doc/current/setup.html) [v5.0.*]
+* [Symfony](https://symfony.com/doc/current/setup.html) [v5.0]
 * [RoadRunner](https://github.com/spiral/roadrunner) [v1.5.2]
 * Makefile [RUS](https://blog.hook.sh/nix/makefile-full-doc/) manual, [EN](https://www.gnu.org/software/make/manual/make.html) official docs
 
@@ -30,13 +30,13 @@ $ git clone https://github.com/renay/symfony-docerized
 
 Need to build base image:
 ```bash
-$ bash ./docker/php/build.sh -t app/php:0.1.0 # 0.1.0 as default version
+$ bash ./docker/php/build.sh -t app/php:$VERSION
 ```
 <br/>
 
 After you need to build an application image:
 ```bash
-$ bash ./docker/app/build.sh -t app/app:0.1.0 -m [--mode] 'dev' # 0.1.0 as default version
+$ bash ./docker/app/build.sh -t app/app:$VERSION -m [--mode] 'dev' 
 ```
 <br/>
 
