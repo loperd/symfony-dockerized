@@ -15,7 +15,7 @@ When creating this project, I was inspired by this article <https://habr.com/en/
 * [PHP 7.4](https://www.php.net/ChangeLog-7.php#7.4.1) with [xDebug](https://xdebug.org/) [v2.9.0] in DEV build
 * [Symfony](https://symfony.com/doc/current/setup.html) [v5.0]
 * [RoadRunner](https://github.com/spiral/roadrunner) [v1.5.2]
-* Makefile [RUS](https://blog.hook.sh/nix/makefile-full-doc/) manual, [EN](https://www.gnu.org/software/make/manual/make.html) official docs
+* Makefile [RUS](https://blog.hook.sh/nix/makefile-full-doc/) leadership, [EN](https://www.gnu.org/software/make/manual/make.html) official docs
 
 # Installation
 
