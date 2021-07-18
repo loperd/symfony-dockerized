@@ -56,7 +56,7 @@ services:
       - app-network
 
   postgres:
-    image: postgres:${POSTGRES_VERSION:-11.4}-alpine
+    image: postgres:${POSTGRES_VERSION:-12.7}-alpine
     restart: always
     environment:
       POSTGRES_DB: 'forge'
