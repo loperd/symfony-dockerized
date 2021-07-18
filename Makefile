@@ -13,14 +13,20 @@ FRONTEND_PORT_SSL := 4002
 REDIS_MANAGER_PORT := 4003
 REDIS_PORT := 4004
 POSTGRES_PORT := 4005
+ENV_FILE := .env
 CURRENT_USER = $(shell id -u):$(shell id -g)
 RUN_APP_ARGS = --rm --user "$(CURRENT_USER)" "$(dc_app_name)"
+
 
 define print
 	printf " \033[33m[%s]\033[0m \033[32m%s\033[0m\n" $1 $2
 endef
 define print_block
 	printf " \e[30;48;5;82m  %s  \033[0m\n" $1
+endef
+define setup_env
+	$(eval include $(ENV_FILE))
+	$(eval export sed 's/=.*//' $(ENV_FILE))
 endef
 
 .PHONY : help \
@@ -41,6 +47,9 @@ init: install clean ## Make full application initialization (install, seed, buil
 
 shell: ## Start shell into app container
 	$(dc_bin) run -e STARTUP_WAIT_FOR_SERVICES=false $(RUN_APP_ARGS) sh
+
+enter:
+	$(dc_bin) exec app bash
 
 test: ## Execute app tests
 	$(dc_bin) run $(RUN_APP_ARGS) composer test
@@ -70,3 +79,14 @@ clean: ## Make some clean
 
 pull: ## Pulling newer versions of used docker images
 	$(dc_bin) pull
+
+init-env:
+	@$(call setup_env)
+
+build-local-php: init-env
+	bash -c "./docker/php/build.sh -t $(APP_NAME)/php:latest"
+
+build-local-app: init-env
+	bash -c "./docker/app/build.sh -t $(APP_NAME):latest -m dev --parent $(APP_NAME)/php:latest"
+
+build-local: init-env build-local-php build-local-app # build local application images

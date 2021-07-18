@@ -1,19 +1,28 @@
 {
-    "name": "renay/symfony-docerized",
+    "name": "loper/symfony-docerized",
     "type": "project",
     "license": "MIT",
     "require": {
         "php": "^7.4.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "baldinof/roadrunner-bundle": "^2.1",
+        "doctrine/annotations": "^1.12",
         "friendsofphp/php-cs-fixer": "^2.16",
-        "spiral/roadrunner": "^1.5",
-        "symfony/console": "^5.0.10",
-        "symfony/dotenv": "^5.0.10",
-        "symfony/flex": "^1.8.4",
-        "symfony/framework-bundle": "^5.0.10",
-        "symfony/psr-http-message-bridge": "^2.0",
-        "symfony/yaml": "^5.0.10"
+        "phpdocumentor/type-resolver": "^1.4",
+        "psr/container": "^1.1",
+        "symfony/cache": "5.3.*",
+        "symfony/config": "5.3.*",
+        "symfony/console": "5.3.*",
+        "symfony/dependency-injection": "5.3.*",
+        "symfony/dotenv": "5.3.*",
+        "symfony/flex": "^1.13",
+        "symfony/framework-bundle": "5.3.3",
+        "symfony/http-foundation": "5.3.*",
+        "symfony/http-kernel": "5.3.*",
+        "symfony/psr-http-message-bridge": "^2.1",
+        "symfony/routing": "5.3.*",
+        "symfony/yaml": "5.3.*"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.5"
@@ -61,7 +70,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "5.0.*"
+            "require": "5.3.*"
         }
     }
 }

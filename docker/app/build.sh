@@ -14,6 +14,11 @@ while [[ $# -gt 0 ]]; do
     shift
     shift
     ;;
+  -p | --parent)
+    PARENT_IMAGE=$(echo $2 | sed 's/["'"']*//g")
+    shift
+    shift
+    ;;
   *)
     POSITIONAL+=("$1")
     shift
@@ -23,4 +28,27 @@ done
 
 set -- "${POSITIONAL[@]}"
 
-docker build ${POSITIONAL[@]} -f "$CURRENT_DIR/$DOCKERFILE" "$CURRENT_DIR/../.."
+if [ -z $PARENT_IMAGE ]; then
+  echo "Parent image name was not passed. Please pass with parameter --parent 'appname:tag'"
+  exit 1
+fi
+
+export PARENT_IMAGE
+
+SOURCE_DOCKERFILE="$CURRENT_DIR/$DOCKERFILE"
+
+if [ ! -f "$SOURCE_DOCKERFILE" ]; then
+  echo "Dockerfile by path " "$SOURCE_DOCKERFILE" " was not found."
+  exit 1
+fi
+
+PREPARED_NAME=$(echo $SOURCE_DOCKERFILE | sed 's/^[./]*//g' | sed 's/\//./g')
+TMP_DOCKERFILE="/tmp/$PREPARED_NAME"
+
+if [ -f $TMP_DOCKERFILE ]; then
+  rm -f $TMP_DOCKERFILE
+fi
+
+envsubst "\$PARENT_IMAGE" < "$SOURCE_DOCKERFILE" > $TMP_DOCKERFILE
+
+docker build ${POSITIONAL[@]} -f "$TMP_DOCKERFILE" "$CURRENT_DIR/../.."

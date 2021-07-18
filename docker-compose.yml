@@ -14,8 +14,8 @@ volumes:
   home-dir:
 
 services:
-  app: &app-service
-    image: app:latest
+  app:
+    image: ${APP_NAME}:latest
     restart: on-failure
     volumes:
       - .:/app:cached
@@ -27,7 +27,7 @@ services:
     ports:
       - '4001:80'
       - '4002:443'
-    command: 'rr serve -v -d -c /app/.rr.local.yml'
+    command: 'bin/rr serve --debug -c /app/.rr.dev.yaml'
     depends_on:
       - redis
       - postgres

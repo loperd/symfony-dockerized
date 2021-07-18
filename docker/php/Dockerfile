@@ -1,4 +1,4 @@
-FROM composer:1.9.1 AS composer
+FROM composer:2.0.2 AS composer
 FROM php:7.4.1-alpine
 
 ENV \
@@ -54,7 +54,6 @@ RUN set -xe \
     && apk del .build-deps \
     && rm -rf /app /home/user ${COMPOSER_HOME} /var/cache/apk/* \
     && mkdir /app /home/user ${COMPOSER_HOME} \
-    && composer global require 'hirak/prestissimo' --no-interaction --no-suggest --prefer-dist \
     && ln -s /usr/bin/composer /usr/bin/c
 
 COPY ./php/conf.d/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
