@@ -4,7 +4,7 @@ baldinof_road_runner:
     kernel_reboot:
         # if you want to use a fresh container on each request, use the `always` strategy
         strategy: on_exception
-        # Exceptions you KNOW that do not put your app in an errored state
+        # Exceptions you KNOW that do not put your app in an unrecoverable state
         allowed_exceptions:
             - Symfony\Component\HttpKernel\Exception\HttpExceptionInterface
             - Symfony\Component\Serializer\Exception\ExceptionInterface

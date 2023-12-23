@@ -1,4 +1,4 @@
-FROM spiralscout/roadrunner:2.3.3 AS roadrunner
+FROM spiralscout/roadrunner:2023.3 AS roadrunner
 FROM $PARENT_IMAGE
 
 ENV \
@@ -6,7 +6,7 @@ ENV \
     COMPOSER_HOME="/tmp/composer" \
     OWN_SSL_CERT_DIR="/ssl-cert" \
     OWN_SSL_CERT_LIFETIME=1095 \
-    XDEBUG_VERSION="2.9.0"
+    XDEBUG_VERSION="3.3.1"
 
 # persistent / runtime deps
 ENV PHPIZE_DEPS \
@@ -36,23 +36,25 @@ RUN set -xe \
         && ls -lh
 
 COPY ./composer.* /app/
+COPY ./docker/shared/keep-alive.sh /usr/local/bin/keep-alive.sh
 
 WORKDIR /app
 
-RUN set -xe \
-    && composer install -vvv \
-        --no-interaction \
-        --no-autoloader \
-        --prefer-dist  \
-        --no-suggest \
-        --no-ansi \
-        --no-scripts \
-    && composer dump-autoload \
-    && rr -h
+#RUN set -xe \
+#    && composer install -vvv \
+#        --no-interaction \
+#        --no-autoloader \
+#        --prefer-dist  \
+#        --no-suggest \
+#        --no-ansi \
+#        --no-scripts \
+#    && composer dump-autoload \
+#    && rr -h
 
 EXPOSE 80
 EXPOSE 443
 
 VOLUME ["/app"]
 
-CMD ["rr", "serve", "-c", "/app/.rr.yml"]
+#CMD ["rr", "serve", "-c", "/app/.rr.yml"]
+CMD ["/usr/local/bin/keep-alive.sh"]

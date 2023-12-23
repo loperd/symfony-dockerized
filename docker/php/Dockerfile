@@ -1,5 +1,5 @@
-FROM composer:2.0.2 AS composer
-FROM php:7.4.1-alpine
+FROM composer/composer:2.6.6 AS composer
+FROM php:8.3-zts-alpine3.18
 
 ENV \
     COMPOSER_ALLOW_SUPERUSER="1" \
@@ -22,6 +22,7 @@ ENV PHPIZE_DEPS \
 # permanent deps
 ENV PERMANENT_DEPS \
     postgresql-libs \
+    linux-headers \
     oniguruma-dev \
     gettext-dev \
     icu-dev \
@@ -35,14 +36,14 @@ RUN set -xe \
     && apk add --no-cache ${PERMANENT_DEPS} \
     && apk add --no-cache --virtual .build-deps ${PHPIZE_DEPS} \
     # https://github.com/docker-library/php/issues/240
-    && apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/community gnu-libiconv \
+    && apk add --no-cache --repository https://dl-3.alpinelinux.org/alpine/edge/community gnu-libiconv \
     && docker-php-ext-configure mbstring --enable-mbstring \
     && docker-php-ext-configure opcache --enable-opcache \
     && docker-php-ext-configure bcmath --enable-bcmath \
     && docker-php-ext-configure pcntl --enable-pcntl \
     && docker-php-ext-configure intl --enable-intl \
     && docker-php-ext-configure pdo_pgsql \
-    && docker-php-ext-install -j$(nproc) \
+    && CFLAGS="$CFLAGS -D_GNU_SOURCE" docker-php-ext-install -j$(nproc) \
         pgsql pdo_pgsql \
         mbstring \
         sockets \

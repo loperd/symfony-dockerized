@@ -1,7 +1,7 @@
 Symfony Application in Docker
 =====================
 
-This repository contains the standard [Symfony](https://symfony.com/doc/current/setup.html) application, packaged in [Docker](https://docs.docker.com/) containers with the ability to run using [Docker-Compose](https://docs.docker.com/compose/).
+This repository contains the standard [Symfony](https://symfony.com) application, packaged in [Docker](https://docs.docker.com/) containers with the ability to run using [Docker-Compose](https://docs.docker.com/compose/).
 
 ***
 
@@ -10,11 +10,11 @@ When creating this project, I was inspired by this article <https://habr.com/en/
 ***
 
 ### Stack:
-* [PostgreSQL](https://www.postgresql.org/) [v11.4]
-* [Redis](https://redis.io/) & [Redis Commander](https://github.com/joeferner/redis-commander) [v5.0.5]
-* [PHP 7.4](https://www.php.net/ChangeLog-7.php#7.4.1) with [xDebug](https://xdebug.org/) [v2.9.0] in DEV build
-* [Symfony](https://symfony.com/doc/current/setup.html) [v5.3.*]
-* [RoadRunner](https://github.com/spiral/roadrunner) [v2.1.3]
+* [PostgreSQL](https://www.postgresql.org/) [v14]
+* [Redis](https://redis.io/) & [Redis Commander](https://github.com/joeferner/redis-commander) [v7.2.3]
+* [PHP 8.3](https://www.php.net/ChangeLog-8.php#PHP_8_3) with [xDebug](https://xdebug.org/announcements/2023-12-14) [v3.3.1] in DEV build
+* [Symfony](https://symfony.com/doc/6.4/setup.html) [v6.4.x]
+* [RoadRunner](https://github.com/spiral/roadrunner) [v2023.x]
 * Makefile [RUS](https://blog.hook.sh/nix/makefile-full-doc/) leadership, [EN](https://www.gnu.org/software/make/manual/make.html) official docs
 
 # Installation
