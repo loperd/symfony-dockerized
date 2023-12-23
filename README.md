@@ -1,4 +1,4 @@
-Symfony Application in Docker
+Symfony Application in Docker | Template Repository
 =====================
 
 This repository contains the standard [Symfony](https://symfony.com) application, packaged in [Docker](https://docs.docker.com/) containers with the ability to run using [Docker-Compose](https://docs.docker.com/compose/).
