@@ -22,7 +22,8 @@ COPY --from=roadrunner /usr/bin/rr /usr/bin/rr
 
 RUN set -xe \
     && apk add --no-cache --virtual .build-deps ${PHPIZE_DEPS} \
-    && pecl install xdebug-${XDEBUG_VERSION} \
+    && pecl install xdebug-${XDEBUG_VERSION}  \
+    && mkdir -p /var/www/html/xdebug && \
         && { \
                 echo "xdebug.mode=debug"; \
                 echo "xdebug.start_with_request=yes"; \
