@@ -1,4 +1,4 @@
-FROM spiralscout/roadrunner:2023.3 AS roadrunner
+FROM spiralscout/roadrunner:2024.1 AS roadrunner
 FROM $PARENT_IMAGE
 
 ENV \

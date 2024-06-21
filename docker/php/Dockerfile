@@ -1,5 +1,5 @@
 FROM composer/composer:2.6.6 AS composer
-FROM php:8.3-zts-alpine3.18
+FROM php:8.3.8-zts-alpine3.20
 
 ENV \
     COMPOSER_ALLOW_SUPERUSER="1" \

@@ -3,10 +3,6 @@ version: '3.2'
 networks:
   app-network:
     driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 192.168.220.0/28
 
 volumes:
   redis-data:
@@ -23,7 +19,7 @@ services:
       - ./docker/docker-compose.env
     environment:
       - PHP_IDE_CONFIG="cli.dev.symfonydockerized.io"
-      - XDEBUG_CONFIG="remote_host=192.168.220.1"
+      - XDEBUG_CONFIG="remote_host=host.docker.internal"
     ports:
       - '4001:80'
       - '4002:443'
@@ -35,11 +31,11 @@ services:
       - app-network
 
   redis:
-    image: redis:${REDIS_VERSION:-7.2.3}-alpine
+    image: redis:${REDIS_VERSION:-7.2.5}-alpine
     volumes:
       - redis-data:/data:cached
     ports:
-      - 6379
+      - "6379"
       - '4004:6379'
     networks:
       - app-network
@@ -56,7 +52,7 @@ services:
       - app-network
 
   postgres:
-    image: postgres:${POSTGRES_VERSION:-14}-alpine
+    image: postgres:${POSTGRES_VERSION:-16}-alpine
     restart: always
     environment:
       POSTGRES_DB: 'forge'
@@ -65,7 +61,7 @@ services:
     volumes:
       - pg-data:/var/lib/postgresql/data:rw
     ports:
-      - 5432
+      - "5432"
       - '5005:5432'
     networks:
       - app-network
