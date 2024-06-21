@@ -10,9 +10,9 @@ When creating this project, I was inspired by this article <https://habr.com/en/
 ***
 
 ### Stack:
-* [PostgreSQL](https://www.postgresql.org/) [v14]
-* [Redis](https://redis.io/) & [Redis Commander](https://github.com/joeferner/redis-commander) [v7.2.3]
-* [PHP 8.3](https://www.php.net/ChangeLog-8.php#PHP_8_3) with [xDebug](https://xdebug.org/announcements/2023-12-14) [v3.3.1] in DEV build
+* [PostgreSQL](https://www.postgresql.org/) [v16]
+* [Redis](https://redis.io/) & [Redis Commander](https://github.com/joeferner/redis-commander) [v7.2.5]
+* [PHP 8.3](https://www.php.net/ChangeLog-8.php#PHP_8_3_8) with [xDebug](https://xdebug.org/announcements/2023-12-14) [v3.3.1] in DEV build
 * [Symfony](https://symfony.com/doc/6.4/setup.html) [v6.4.x]
 * [RoadRunner](https://github.com/spiral/roadrunner) [v2023.x]
 * Makefile [RUS](https://blog.hook.sh/nix/makefile-full-doc/) leadership, [EN](https://www.gnu.org/software/make/manual/make.html) official docs
