@@ -6,7 +6,7 @@ ENV \
     COMPOSER_HOME="/tmp/composer" \
     OWN_SSL_CERT_DIR="/ssl-cert" \
     OWN_SSL_CERT_LIFETIME=1095 \
-    XDEBUG_VERSION="3.3.1"
+    XDEBUG_VERSION="3.3.2"
 
 # persistent / runtime deps
 ENV PHPIZE_DEPS \
