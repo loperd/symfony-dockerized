@@ -15,6 +15,7 @@ while [[ $# -gt 0 ]]; do
     shift
     ;;
   -p | --parent)
+    # shellcheck disable=SC2001
     PARENT_IMAGE=$(echo $2 | sed 's/["'"']*//g")
     shift
     shift
@@ -28,7 +29,7 @@ done
 
 set -- "${POSITIONAL[@]}"
 
-if [ -z $PARENT_IMAGE ]; then
+if [ -z "$PARENT_IMAGE" ]; then
   echo "Parent image name was not passed. Please pass with parameter --parent 'appname:tag'"
   exit 1
 fi
@@ -42,13 +43,13 @@ if [ ! -f "$SOURCE_DOCKERFILE" ]; then
   exit 1
 fi
 
-PREPARED_NAME=$(echo $SOURCE_DOCKERFILE | sed 's/^[./]*//g' | sed 's/\//./g')
+PREPARED_NAME=$(echo "$SOURCE_DOCKERFILE" | sed 's/^[./]*//g' | sed 's/\//./g')
 TMP_DOCKERFILE="/tmp/$PREPARED_NAME"
 
-if [ -f $TMP_DOCKERFILE ]; then
-  rm -f $TMP_DOCKERFILE
+if [ -f "$TMP_DOCKERFILE" ]; then
+  rm -f "$TMP_DOCKERFILE"
 fi
 
-envsubst "\$PARENT_IMAGE" < "$SOURCE_DOCKERFILE" > $TMP_DOCKERFILE
+envsubst "\$PARENT_IMAGE" < "$SOURCE_DOCKERFILE" > "$TMP_DOCKERFILE"
 
-docker build ${POSITIONAL[@]} -f "$TMP_DOCKERFILE" "$CURRENT_DIR/../.."
+docker build "${POSITIONAL[@]}" -f "$TMP_DOCKERFILE" "$CURRENT_DIR/../.."

@@ -6,10 +6,10 @@
         "php": "^8.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "baldinof/roadrunner-bundle": "^3.0",
-        "doctrine/annotations": "^1.12",
+        "baldinof/roadrunner-bundle": "^3.1",
+        "doctrine/annotations": "^2.0",
         "phpdocumentor/type-resolver": "^1.4",
-        "psr/container": "^1.1",
+        "psr/container": "^2.0",
         "symfony/cache": "^6.4",
         "symfony/config": "^6.4",
         "symfony/console": "^6.4",
@@ -25,13 +25,13 @@
         "symfony/http-kernel": "^6.4",
         "symfony/psr-http-message-bridge": "^2",
         "symfony/routing": "^6.4",
+        "symfony/runtime": "^6.4",
         "symfony/string": "^6.4",
         "symfony/yaml": "^6.4"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-latest"
-        ,
-        "phpunit/phpunit": "^10",
+        "phpunit/phpunit": "^10.5",
+        "roave/security-advisories": "dev-latest",
         "symfony/var-dumper": "^6.4"
     },
     "config": {
@@ -40,7 +40,8 @@
         },
         "sort-packages": true,
         "allow-plugins": {
-            "symfony/flex": true
+            "symfony/flex": true,
+            "symfony/runtime": true
         }
     },
     "autoload": {
