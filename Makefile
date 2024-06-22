@@ -61,7 +61,8 @@ test-cover: ## Execute app tests with coverage
 
 up: ## Create and start containers
 	CURRENT_USER=$(CURRENT_USER) $(dc_bin) up --detach
-	$(call print_block, 'Navigate your browser to         ⇒ https://127.0.0.1:$(FRONTEND_PORT_SSL)')
+	$(call print_block, 'Navigate your browser to         ⇒ http://127.0.0.1:$(FRONTEND_PORT)')
+	$(call print_block, 'Or navigate your browser to      ⇒ https://127.0.0.1:$(FRONTEND_PORT_SSL)')
 	$(call print_block, 'Redis Manager (Redis Web UI)     ⇒ http://127.0.0.1:$(REDIS_MANAGER_PORT)')
 	$(call print_block, 'Additional ports (available for connections) - Redis ⇒ $(REDIS_PORT); Postgres ⇒ $(POSTGRES_PORT)')
 

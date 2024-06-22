@@ -3,12 +3,13 @@ Makefile
 docker*.yml
 vendor
 var/*
+.env.dist
 *.log
 .gitignore
 .gitlab-ci.yml
 .editorconfig
-.env
 .gitlab
 .idea
 .git
 *.local.yml
+README.md

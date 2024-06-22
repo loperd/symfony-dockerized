@@ -1,37 +1,81 @@
-version: "3"
+version: '3'
+
+rpc:
+  listen: tcp://127.0.0.1:6001
 
 server:
+  #  on_init:
+  #    command: "composer install"
+  #    exec_timeout: 3m
   command: "php public/index.php"
   env:
     - APP_RUNTIME: Baldinof\RoadRunnerBundle\Runtime\Runtime
 
 http:
-  address: 0.0.0.0:8080
-  pool:
-    debug: false
+  address: 0.0.0.0:80
+  internal_error_code: 505
+  access_logs: false
+  max_request_size: 256
+  raw_body: false
   middleware: [ "static", "gzip" ]
-  uploads:
-    forbid: [ ".php", ".exe", ".bat" ]
+  pool:
+    debug: true
+  trusted_subnets: [
+    "10.0.0.0/8",
+    "127.0.0.0/8",
+    "172.16.0.0/12",
+    "192.168.0.0/16",
+    "::1/128",
+    "fc00::/7",
+    "fe80::/10",
+  ]
+  headers:
+    cors:
+      allowed_origin: "*"
+      allowed_headers: "*"
+      allowed_methods: "GET,POST,PUT,DELETE"
+      allow_credentials: true
+      exposed_headers: "Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma"
+      max_age: 600
   static:
     dir: "public"
-    forbid: [ ".php", ".htaccess" ]
+    forbid: [ ".php" ]
+    calculate_etag: false
+    weak: false
+    allow: [ ".txt", ".css", ".js" ]
+    num_workers: 0
+    max_jobs: 0
+    max_queue_size: 0
+    allocate_timeout: 60s
+    reset_timeout: 60s
+    stream_timeout: 60s
+    destroy_timeout: 60s
+    supervisor:
+      watch_tick: 1s
+      ttl: 0s
+      idle_ttl: 10s
+      max_worker_memory: 128
+      exec_ttl: 60s
+
+metrics:
+  address: "127.0.0.1:2112"
+
+status:
+  address: 127.0.0.1:2114
+  unavailable_status_code: 503
+
+endure:
+  grace_period: 30s
+  print_graph: false
+  log_level: error
 
 logs:
   mode: production
   channels:
     http:
-      level: debug # Log all http requests, set to info to disable
+      level: error
     server:
-      level: info # Everything written to worker stderr is logged
+      level: info
       mode: raw
     metrics:
       level: error
-
-# Uncomment to use metrics integration
-# rpc:
-#   listen: tcp://127.0.0.1:6001
-
-# Uncomment to use metrics integration
-# metrics:
-#   # prometheus client address (path /metrics added automatically)
-#   address: "0.0.0.0:9180"
